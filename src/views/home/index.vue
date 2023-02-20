@@ -8,7 +8,7 @@ import DaysWeather from "@/views/home/DaysWeather.vue";
 const props = defineProps<{
   cityInfo: cityInfo,
 }>();
-const nowWeatherInfo = ref<WeatherResponseNow|{}>({});
+const nowWeatherInfo = ref<WeatherResponseNow>({});
 // 获取实时天气
 function getNowWeather() {
   getRealTimeReport({
@@ -89,7 +89,9 @@ function getWindLevelInfo(level:number) {
               :bordered="false"
           >
             <p class="main-desc-title">🎐风力等级</p>
-            <p class="main-desc-content">{{nowWeatherInfo.windScale+"级|"+getWindLevelInfo(nowWeatherInfo.windScale)}}</p>
+            <p class="main-desc-content">
+              {{nowWeatherInfo.windScale+"级|"+getWindLevelInfo(Number(nowWeatherInfo.windScale || 1))}}
+            </p>
           </n-card>
           <n-card
               class="weather-desc-card"

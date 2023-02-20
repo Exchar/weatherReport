@@ -1,6 +1,6 @@
 
 interface overrideType {
-  arrDistinctByProp: (prop: string) => any[];
+  arrDistinctByProp(prop:string):any[];
 }
 declare global {
   interface Window {
@@ -38,5 +38,8 @@ declare global {
     prototype: overrideType;
   }
 //   定义风力等级枚举
+}
+interface Array<T> {
+  arrDistinctByProp(prop:string):any
 }
 export {};

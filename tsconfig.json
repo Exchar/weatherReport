@@ -10,17 +10,20 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
+    "allowJs": true,
     "baseUrl": ".", //这一行必须要写
     "paths": {
-      "@/*":["src/*"],
+      "@/*":["src/*"]
     },
     "skipLibCheck": true,
     "noEmit": true,
     "typeRoots": ["src/@types", "node_modules/@types"],
-    "types": ["node"]
+    "types": ["node"],
+    "composite": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","src/icons/*.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "files": ["src/App.vue"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": ["node_modules"],  //忽略node_modules下的文件
   "skipLibCheck": true         //忽略所有声明的ts文件
 }

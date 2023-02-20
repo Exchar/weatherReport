@@ -57,7 +57,8 @@ function getCityList(key:string,useLocal = false) {
     number: 20,
   }).then(resp=> {
     if (cachedCity) {
-      cityList.value = [...resp.location, cachedCity].arrDistinctByProp('id');
+      const tempList = [...resp.location, cachedCity] as any;
+      cityList.value = tempList.arrDistinctByProp('id');
     } else {
       cityList.value = resp.location;
     }
