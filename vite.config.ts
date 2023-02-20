@@ -1,10 +1,11 @@
 import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
-import path, { resolve } from "path";
+import { resolve } from "path";
 // 引入在vite中使用环境变量的插件，方便在index.html中使用.env文件变量
 import { createHtmlPlugin } from "vite-plugin-html";
-import fs from "fs";
+import * as fs from "fs";
 import eslintPlugin from "vite-plugin-eslint";
+import * as path from "path";
 import {svgBuilder} from './src/icons';
 
 // 这个配置 为了在html中使用 环境变量
@@ -37,7 +38,7 @@ export default defineConfig(({ mode }) => {
       eslintPlugin({
         include: ["src/**/*.ts", "src/**/*.vue", "src/*.ts", "src/*.vue"],
       }),
-      svgBuilder('./src/icons/svg/')
+      svgBuilder('./src/icons/svg/'),
     ],
     resolve: {
       alias: [

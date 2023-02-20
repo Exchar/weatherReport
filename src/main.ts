@@ -12,10 +12,11 @@ import "./assets/style/reset.css";
 // @ts-ignore
 import WeatherIcon from "@/components/WeatherIcon.vue";
 import 'dayjs/locale/zh-cn';
+import windowProjectRegister from "./projectConfig";
 // 汉化
 dayjs.locale('zh-cn');
 
-
+windowProjectRegister();
 // 拆分配置
 const app = createApp(App);
 

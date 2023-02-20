@@ -39,7 +39,8 @@ declare global {
   }
 //   定义风力等级枚举
 }
-interface Array<T> {
-  arrDistinctByProp(prop:string):any
+interface Window{
+  projectConfig:any;
 }
+
 export {};
