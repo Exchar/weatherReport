@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%-title %></title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="text/javascript" src="<%- configFileUrl%>"></script>
+    <script type="module" src="/src/main.ts"></script>
+    <script src="https://webapi.amap.com/loader.js"></script>
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode:'cb1d95d1695f2c8d6395af080a795b3a',
+        }
+    </script>
+    <script type="text/javascript" >
+        var apiKey = window.projectConfig.goodApiKey;
+        AMapLoader.load({
+            "key": apiKey,              // 申请好的Web端开发者Key，首次调用 load 时必填
+            "version": "2.0",   // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+            "plugins": [],           // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+        }).then((AMap)=>{
+            console.log(AMap)
+            window.AMap = AMap;
+        }).catch((e)=>{
+            console.error(e);  //加载错误提示
+        });
+    </script>
+  </body>
+</html>
