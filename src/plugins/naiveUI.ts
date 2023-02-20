@@ -38,7 +38,7 @@ import {
   NSelect,
   NCard,
   NRadioGroup,
-  NRadioButton
+  NRadioButton,
 } from "naive-ui";
 
 const naive = create({

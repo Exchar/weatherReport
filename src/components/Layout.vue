@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {darkTheme, NIcon} from 'naive-ui';
+import {darkTheme, NIcon,useMessage} from 'naive-ui';
 import {BuiltInGlobalTheme} from "naive-ui/lib/themes/interface";
 import {
   Sunny as SunIcon
@@ -11,6 +11,7 @@ import {ref,onMounted} from 'vue';
 import {City as CityIcon} from '@vicons/fa';
 import {Gps as GpsIcon} from '@vicons/tabler';
 import {locationRequest} from '@/api/index';
+
 import {getProjectConfig, getDeviceLocation, getLocalStorage, setLocalStorage,isEmpty} from '@/utils/common';
 
 const darkThemeIns = ref<null | BuiltInGlobalTheme>(null);
@@ -23,6 +24,7 @@ const cachedCity:cityInfo=getLocalStorage('cachedCity');
 const cityList = ref<cityInfo[]>([cachedCity]);
 const nowCityName = cachedCity ? cachedCity.name:'';
 const nowCityInfo = ref<cityInfo|undefined>(undefined);
+const message = useMessage();
 function themeChange() {
   setLocalStorage('isDark',isDark.value);
   if(isDark.value){
@@ -76,6 +78,9 @@ function getLocationInfo(useLocal = false) {
     // 精度
     const {city} = res;
     getCityList(city,useLocal);
+  }).catch((e)=> {
+    console.log(e);
+    message.error("无法获取到您的位置，请手动输入城市名！");
   }).finally(()=> {
     locationLoading.value = false;
   });

@@ -13,7 +13,9 @@ onMounted(()=> {
 <template>
   <router-view #default="{Component}">
     <keep-alive :include="keepAliveViews">
-      <component :is="Component"></component>
+      <n-message-provider>
+        <component :is="Component"></component>
+      </n-message-provider>
     </keep-alive>
   </router-view>
 </template>
