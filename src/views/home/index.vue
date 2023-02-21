@@ -5,6 +5,7 @@ import {getRealTimeReport, WeatherResponseNow, RealTimeWeatherResponse, WeatherD
 import WeatherIcon from "@/components/WeatherIcon.vue";
 import DaysWeather from "@/views/home/DaysWeather.vue";
 import TimesReport from "@/views/home/TimesReport.vue";
+import RainReport from "@/views/home/RainReport.vue";
 
 const props = defineProps<{
   cityInfo: cityInfo,
@@ -51,7 +52,9 @@ function getWindLevelInfo(level:number) {
             </div>
             <p class="main-desc-title">{{nowWeatherInfo.text}} {{nowDayInfo ? nowDayInfo?.tempMin+"℃~"+nowDayInfo?.tempMax+'℃':''}}</p>
             <p class="main-desc-title little">{{`体感${nowWeatherInfo.feelsLike}℃,有${nowWeatherInfo.windScale}级${nowWeatherInfo.windDir}`}}</p>
-            <!--        todo 24小时天气-->
+<!--            todo 未来两小时降水详情-->
+            <RainReport :cityInfo="props.cityInfo"></RainReport>
+            <!--        24小时天气-->
             <TimesReport :cityInfo="props.cityInfo"></TimesReport>
           </n-card>
         </div>

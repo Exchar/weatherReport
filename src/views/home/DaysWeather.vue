@@ -55,7 +55,7 @@ export default {
       :bordered="false"
   >
     <div class="top-switch">
-      <n-radio-group v-model:value="daysType" @update:value="daysTypeChange">
+      <n-radio-group v-model:value="daysType" @update:value="daysTypeChange" size="small">
         <n-radio-button :value="3">3天</n-radio-button>
         <n-radio-button :value="7">7天</n-radio-button>
         <n-radio-button :value="10">10天</n-radio-button>

@@ -19,7 +19,7 @@ const listItemContainer = ref<HTMLElement|null>(null);
 // const listItem = ref<HTMLElement|null>(null);
 const chartInstance = ref<EChartsType | null>(null);
 const timesDataList = ref<WeatherTimesReport[] | null>(null);
-const listCollapse = ref(false);
+const listCollapse = ref(true);
 const arrowBottom = ref<number|string>(0);
 const arrowDisplay = ref<string>('none');
 
@@ -33,10 +33,13 @@ function initChart() {
       left:'32px',
       right: '32px',
       bottom:'0',
-      top:'16px'
+      top:'0'
     },
     tooltip:{
-      formatter: (params: any)=> `${params.name} ${params.data.coord[1]}\u2103`
+      formatter: (params: any)=>
+        // console.log(params);
+          `${params.name} ${params.value}\u2103`
+      
     },
     xAxis: {
       type: 'category',
@@ -133,7 +136,7 @@ export default {
 </script>
 <template>
   <div class="top-switch">
-    <n-radio-group v-model:value="timesType" @update:value="timesTypeChange">
+    <n-radio-group v-model:value="timesType" @update:value="timesTypeChange" size="small">
       <n-radio-button :value="24">24h</n-radio-button>
       <n-radio-button :value="72">72h</n-radio-button>
       <n-radio-button :value="168">168h</n-radio-button>

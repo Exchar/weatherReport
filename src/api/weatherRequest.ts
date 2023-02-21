@@ -41,7 +41,7 @@ export interface RealTimeWeatherResponse {
 // unit数据单位设置，可选值包括unit=m（公制单位，默认）和unit=i（英制单位）。更多选项和说明参考度量衡单位。\
 export interface GetDayReportParams {
   location:string,
-  key:string,
+  key?:string,
   lang?:string,
   unit?:'m'|'i'
 }
@@ -192,6 +192,28 @@ export interface WeatherTimesReportResponse {
     license: string,
   }
 }
+
+export interface RainsReportObj {
+  fxTime:string,
+  precip:string,
+  type:string,
+}
+// minutely.fxTime 预报时间
+// minutely.precip 10分钟累计降水量，单位毫米
+// minutely.type 降水类型：rain = 雨，snow = 雪
+export interface WeatherRainReportResponse {
+  code:string,
+  // 更新时间
+  updateTime: string,
+  fxLink: string,
+  summary:string,
+  minutely:RainsReportObj[]
+  refer:{
+    sources:string[],
+    license: string,
+  }
+}
+
 export const getDaysWeatherReport = (day: 3|7|10|15|30,params:GetDayReportParams)=>
   weatherAxios<WeatherDaysReportResponse>({
     url:`/weather/${day}d`,
@@ -202,4 +224,10 @@ export const getTimesWeatherReport = (hour:24|72|168, params:GetDayReportParams)
   weatherAxios<WeatherTimesReportResponse>({
     url: `/weather/${hour}h`,
     params
+  });
+
+export const getRainsReport = (params:GetDayReportParams)=>
+  weatherAxios<WeatherRainReportResponse>({
+    url:'/minutely/5m',
+    params,
   });

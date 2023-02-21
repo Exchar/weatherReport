@@ -6,6 +6,7 @@ import axios, {
 // @ts-ignore
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import {getProjectConfig} from "@/utils/common";
 
 // 定义服务端接口返回的接口格式，其中data是主要数据
 export type Response<T = any> = {
@@ -42,9 +43,10 @@ class Request {
   public getWrappedInstance = <T>(config: AxiosRequestConfig) => {
     console.log(this);
     const ins = this.getInstance();
+    const params = config?.params || {};
     return new Promise<T>((res, rej) => {
       ins
-        .request<T>(config)
+        .request<T>({...config,params:{...params,key: getProjectConfig('apiKey')}})
         .then((response) => {
           console.log(response);
           if (response && response.data && response.status === 200) {
