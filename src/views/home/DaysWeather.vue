@@ -5,7 +5,6 @@ import {getDaysWeatherReport, WeatherDaysReport} from "@/api/weatherRequest";
 import {getProjectConfig} from "@/utils/common";
 import WeatherIcon from "@/components/WeatherIcon.vue";
 
-console.log(dayjs.locale());
 const props = defineProps<{
   cityInfo: cityInfo,
 }>();
@@ -20,9 +19,7 @@ function getDaysWeather(days:3|7|10|15|30 = 7) {
     location:props.cityInfo.id,
     key: getProjectConfig('apiKey')
   }).then(res=> {
-    console.log(res);
     daysReportList.value = res.daily;
-    console.log(daysReportList);
     emits('emitReportList',daysReportList.value);
   });
 }

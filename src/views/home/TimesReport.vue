@@ -24,10 +24,8 @@ const arrowBottom = ref<number|string>(0);
 const arrowDisplay = ref<string>('none');
 
 function initChart() {
-    console.log(chartContainer.value);
   //   计算x坐标
   const xData = timesDataList.value?.map(i=> dayjs(i.fxTime).format('HH:mm'));
-  console.log(xData);
   const highData = timesDataList.value?.map(i=>i.temp);
   // 生成option
   const option:ECBasicOption = {
@@ -38,10 +36,7 @@ function initChart() {
       top:'16px'
     },
     tooltip:{
-      formatter: (params: any)=> {
-        console.log(params);
-        return `${params.name} ${params.data.coord[1]}\u2103`;
-      }
+      formatter: (params: any)=> `${params.name} ${params.data.coord[1]}\u2103`
     },
     xAxis: {
       type: 'category',
@@ -84,7 +79,6 @@ function getTimesWeather(type:24|72|168 = 24) {
     location:props.cityInfo.id,
     key: getProjectConfig('apiKey')
   }).then(res=> {
-    console.log(res.hourly);
     timesDataList.value = res.hourly || [];
     setTimeout(()=> {
       if(chartContainer.value){
@@ -130,7 +124,7 @@ watch(()=>props.cityInfo,(newCityInfo,oldCityInfo)=> {
   immediate:true,
 });
 
-console.log(echarts);
+
 </script>
 <script lang="ts">
 export default {
