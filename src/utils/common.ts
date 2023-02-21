@@ -80,6 +80,6 @@ export const isEmpty = (data: any) => {
 
 export const getWindDicDataByLevel = (level:number)=> {
   const findItem = windScaleList.find(i=>i.level===Number(level)) || undefined;
-  console.log(findItem,level);
+  // console.log(findItem,level);
   return findItem;
 };

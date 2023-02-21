@@ -39,7 +39,7 @@ export interface RealTimeWeatherResponse {
 // key(必选)用户认证key，请参考如何获取你的KEY。支持数字签名方式进行认证。例如 key=123456789ABC
 // lang多语言设置，更多语言可选值参考语言代码。当数据不匹配你设置的语言时，将返回英文或其本地语言结果。
 // unit数据单位设置，可选值包括unit=m（公制单位，默认）和unit=i（英制单位）。更多选项和说明参考度量衡单位。\
-export interface RetDayReportParams {
+export interface GetDayReportParams {
   location:string,
   key:string,
   lang?:string,
@@ -150,8 +150,56 @@ export interface WeatherDaysReportResponse {
     license: string,
   }
 }
-export const getDaysWeatherReport = (day: 3|7|10|15|30,params:RetDayReportParams)=>
+// hourly.fxTime 预报时间
+// hourly.temp 温度，默认单位：摄氏度
+// hourly.icon 天气状况和图标的代码，图标可通过天气状况和图标下载
+// hourly.text 天气状况的文字描述，包括阴晴雨雪等天气状态的描述
+// hourly.wind360 风向360角度
+// hourly.windDir 风向
+// hourly.windScale 风力等级
+// hourly.windSpeed 风速，公里/小时
+// hourly.humidity 相对湿度，百分比数值
+// hourly.precip 当前小时累计降水量，默认单位：毫米
+// hourly.pop 逐小时预报降水概率，百分比数值，可能为空
+// hourly.pressure 大气压强，默认单位：百帕
+// hourly.cloud 云量，百分比数值。可能为空
+// hourly.dew 露点温度。可能为空
+export interface WeatherTimesReport {
+  fxTime:string,
+  temp:string,
+  // 天气状况和图标的代码，图标可通过天气状况和图标下载
+  icon:string,
+  text:string,
+  wind360:string,
+  windDir:string,
+  windScale:string,
+  windSpeed:string,
+  humidity:string,
+  precip:string,
+  dew?:string,
+  pop:string,
+  cloud?:string,
+}
+
+export interface WeatherTimesReportResponse {
+  code:string,
+  // 更新时间
+  updateTime: string,
+  fxLink: string,
+  hourly:WeatherTimesReport[]
+  refer:{
+    sources:string[],
+    license: string,
+  }
+}
+export const getDaysWeatherReport = (day: 3|7|10|15|30,params:GetDayReportParams)=>
   weatherAxios<WeatherDaysReportResponse>({
     url:`/weather/${day}d`,
     params
 });
+
+export const getTimesWeatherReport = (hour:24|72|168, params:GetDayReportParams)=>
+  weatherAxios<WeatherTimesReportResponse>({
+    url: `/weather/${hour}h`,
+    params
+  });

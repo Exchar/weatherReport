@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import {watch,ref,onMounted} from "vue";
-import * as echarts from 'echarts';
+import {watch,ref} from "vue";
 import dayjs from "dayjs";
 import {getDaysWeatherReport, WeatherDaysReport} from "@/api/weatherRequest";
 import {getProjectConfig} from "@/utils/common";
@@ -10,7 +9,7 @@ console.log(dayjs.locale());
 const props = defineProps<{
   cityInfo: cityInfo,
 }>();
-const chartContainer = ref<HTMLElement|null>(null);
+const emits = defineEmits(['emitReportList']);
 
 // 变量定义
 const daysType = ref<3|7|10|15|30>(7);
@@ -24,6 +23,7 @@ function getDaysWeather(days:3|7|10|15|30 = 7) {
     console.log(res);
     daysReportList.value = res.daily;
     console.log(daysReportList);
+    emits('emitReportList',daysReportList.value);
   });
 }
 function daysTypeChange(){
@@ -39,19 +39,7 @@ watch(()=>props.cityInfo,(newCityInfo,oldCityInfo)=> {
   flush: 'post',
   immediate:true,
 });
-onMounted(()=> {
-  setTimeout(()=> {
-    console.log(chartContainer.value);
-    if(chartContainer.value){
-      const chart = echarts.init(chartContainer.value,'shine',{});
 
-      const chartOption = {
-
-      };
-      chart.setOption(chartOption);
-    }
-  },0);
-});
 </script>
 
 <script lang="ts">

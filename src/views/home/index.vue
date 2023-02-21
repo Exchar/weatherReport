@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref, watch} from 'vue';
 import {getProjectConfig, getWindDicDataByLevel} from '@/utils/common';
-import {getRealTimeReport, WeatherResponseNow,RealTimeWeatherResponse} from "@/api/weatherRequest";
+import {getRealTimeReport, WeatherResponseNow, RealTimeWeatherResponse, WeatherDaysReport} from "@/api/weatherRequest";
 import WeatherIcon from "@/components/WeatherIcon.vue";
 import DaysWeather from "@/views/home/DaysWeather.vue";
 import TimesReport from "@/views/home/TimesReport.vue";
@@ -10,6 +10,7 @@ const props = defineProps<{
   cityInfo: cityInfo,
 }>();
 const nowWeatherInfo = ref<WeatherResponseNow>({});
+const nowDayInfo = ref<WeatherDaysReport | null>(null);
 // 获取实时天气
 function getNowWeather() {
   getRealTimeReport({
@@ -18,6 +19,9 @@ function getNowWeather() {
   }).then((res: RealTimeWeatherResponse)=> {
     nowWeatherInfo.value = res.now;
   });
+}
+function setDaysReportList(list: WeatherDaysReport[]) {
+  nowDayInfo.value = list && list[0] ? list[0]:null;
 }
 watch(()=>props.cityInfo,(newCityInfo,oldCityInfo)=> {
   if(newCityInfo && newCityInfo.id && (!oldCityInfo || newCityInfo.id!==oldCityInfo.id)){
@@ -40,20 +44,20 @@ function getWindLevelInfo(level:number) {
               style="height:100%"
               class="main-card"
               embedded
-              hoverable
               :bordered="false"
           >
             <div class="main-desc-icon">
               <WeatherIcon v-if="nowWeatherInfo.icon" :icon-name="nowWeatherInfo.icon" style="font-size: 3em"></WeatherIcon>
             </div>
-            <p class="main-desc-title">{{nowWeatherInfo.text}}</p>
+            <p class="main-desc-title">{{nowWeatherInfo.text}} {{nowDayInfo ? nowDayInfo?.tempMin+"℃~"+nowDayInfo?.tempMax+'℃':''}}</p>
+            <p class="main-desc-title little">{{`体感${nowWeatherInfo.feelsLike}℃,有${nowWeatherInfo.windScale}级${nowWeatherInfo.windDir}`}}</p>
             <!--        todo 24小时天气-->
-            <TimesReport></TimesReport>
+            <TimesReport :cityInfo="props.cityInfo"></TimesReport>
           </n-card>
         </div>
 <!--      todo  每天预报（可切换）-->
         <div class="day-weather-content">
-        <DaysWeather :cityInfo="props.cityInfo"></DaysWeather>
+        <DaysWeather :cityInfo="props.cityInfo" @emitReportList="setDaysReportList"></DaysWeather>
         </div>
 <!--        天气小项-->
         <div class="top-weather-desc">
@@ -161,12 +165,15 @@ function getWindLevelInfo(level:number) {
   height:100%;
 }
 .home-main-content{
-  height: 140px;
+  height: auto;
   .top-weather{
     height:100%;
     .main-desc-title{
       text-align: center;
       font-size: 1.2em;
+      &.little{
+        font-size: 1.1em;
+      }
     }
     .main-card{
       border-radius:20px;
