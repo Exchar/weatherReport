@@ -180,6 +180,9 @@ export default {
 
 
 <style scoped lang="scss">
+.top-switch{
+  margin-top:16px;
+}
 .chart-container{
   height: 120px;
   width:100%;
@@ -236,7 +239,7 @@ export default {
   display: flex;
   //box-shadow: var(--n-box-shadow);
   border-radius: 10px;
-  margin-top:8px;
+  //margin-top:8px;
   justify-content: flex-start;
   padding: 8px 0;
   align-items: center;
