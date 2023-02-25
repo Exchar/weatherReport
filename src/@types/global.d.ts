@@ -10,6 +10,7 @@ declare global {
     AMap: any;
     getCurrentPosition: any;
     darkTheme: any;
+    _AMapSecurityConfig:any;
   }
   interface cityInfo {
     // 第一级行政区划

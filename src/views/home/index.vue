@@ -53,12 +53,12 @@ function getWindLevelInfo(level:number) {
             <p class="main-desc-title">{{nowWeatherInfo.text}} {{nowDayInfo ? nowDayInfo?.tempMin+"℃~"+nowDayInfo?.tempMax+'℃':''}}</p>
             <p class="main-desc-title little">{{`体感${nowWeatherInfo.feelsLike}℃,有${nowWeatherInfo.windScale}级${nowWeatherInfo.windDir}`}}</p>
 <!--            todo 未来两小时降水详情-->
-            <RainReport :cityInfo="props.cityInfo" v-if="
+            <RainReport :cityInfo="props.cityInfo || {}" v-if="
             nowWeatherInfo.text?.includes('雨') ||
             nowWeatherInfo.text?.includes('雪')
             "></RainReport>
             <!--        24小时天气-->
-            <TimesReport :cityInfo="props.cityInfo"></TimesReport>
+            <TimesReport :cityInfo="props.cityInfo || {}"></TimesReport>
           </n-card>
         </div>
 <!--      todo  每天预报（可切换）-->
