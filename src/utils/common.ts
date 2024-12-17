@@ -96,12 +96,25 @@ export function  initGetWeatherInfo():Promise<{ city:string }> {
         resolve({city:`${longitude},${latitude}`});
 
       },(e)=> {
-        console.error('获取坐标失败',e);
-        reject(new Error('获取坐标失败'));
+        console.error('使用geolocation获取坐标失败',e);
+        const {AMap} = window;
+        AMap.plugin('AMap.CitySearch', () => {
+          const citySearch = new AMap.CitySearch();
+          citySearch.getLocalCity((status: any, result: any) => {
+            console.log(status, result);
+            if (status === 'complete' && result.info === 'OK') {
+              // 查询成功，result即为当前所在城市信息
+              console.log(result);
+              resolve(result);
+            } else {
+              reject(result);
+            }
+          });
+        });
       },{
         enableHighAccuracy : true,
         maximumAge: 60000,
-        timeout: 10000
+        timeout: 5000
       });
     } else {
       console.error('浏览器不支持地理定位!');
