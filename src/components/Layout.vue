@@ -12,7 +12,14 @@ import {City as CityIcon} from '@vicons/fa';
 import {Gps as GpsIcon} from '@vicons/tabler';
 import {locationRequest} from '@/api/index';
 
-import {getProjectConfig, getDeviceLocation, getLocalStorage, setLocalStorage,isEmpty} from '@/utils/common';
+import {
+  getProjectConfig,
+  // getDeviceLocation,
+  getLocalStorage,
+  setLocalStorage,
+  isEmpty,
+  initGetWeatherInfo
+} from '@/utils/common';
 
 const darkThemeIns = ref<null | BuiltInGlobalTheme>(null);
 const isDark = ref(false);
@@ -74,7 +81,7 @@ function getCityList(key:string,useLocal = false) {
 function getLocationInfo(useLocal = false) {
   locationLoading.value = true;
   //  获取经纬信息
-  getDeviceLocation().then(res=>{
+  initGetWeatherInfo().then(res=>{
     // 精度
     const {city} = res;
     getCityList(city,useLocal);

@@ -52,6 +52,7 @@ export default defineConfig(({ mode }) => {
       // css预处理器
       preprocessorOptions: {
         scss: {
+          api: 'modern-compiler',
           charset: false,
           // 需要在assets下创建对应的文件global.scss
           additionalData: '@import "./src/assets/style/global.scss";',

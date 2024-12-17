@@ -9,20 +9,20 @@ export const getProjectConfig = (key: string): any => {
 };
 
 export const getDeviceLocation = async (): Promise<any> => new Promise((resolve, reject) => {
-    const {AMap} = window;
-    AMap.plugin('AMap.CitySearch', () => {
-      const citySearch = new AMap.CitySearch();
-      citySearch.getLocalCity((status: any, result: any) => {
-        console.log(status, result);
-        if (status === 'complete' && result.info === 'OK') {
-          // 查询成功，result即为当前所在城市信息
-          console.log(result);
-          resolve(result);
-        } else {
-          reject(result);
-        }
-      });
-    });
+    // const {AMap} = window;
+    // AMap.plugin('AMap.CitySearch', () => {
+    //   const citySearch = new AMap.CitySearch();
+    //   citySearch.getLocalCity((status: any, result: any) => {
+    //     console.log(status, result);
+    //     if (status === 'complete' && result.info === 'OK') {
+    //       // 查询成功，result即为当前所在城市信息
+    //       console.log(result);
+    //       resolve(result);
+    //     } else {
+    //       reject(result);
+    //     }
+    //   });
+    // });
   });
 
 // export const getDeviceLocation = (): Promise<any> => {
@@ -83,3 +83,28 @@ export const getWindDicDataByLevel = (level:number)=> {
   // console.log(findItem,level);
   return findItem;
 };
+
+export function  initGetWeatherInfo():Promise<{ city:string }> {
+  console.log('获取定位信息');
+  console.log(navigator.geolocation);
+  // 获取定位信息
+  return new Promise((resolve, reject) => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        // 获取天气信息
+        resolve({city:`${longitude},${latitude}`});
+
+      },(e)=> {
+        console.error('获取坐标失败',e);
+        reject(new Error('获取坐标失败'));
+      },{
+        enableHighAccuracy : true
+      });
+    } else {
+      console.error('浏览器不支持地理定位!');
+      reject(new Error('浏览器不支持地理定位!'));
+    }
+  });
+
+}
