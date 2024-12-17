@@ -99,7 +99,9 @@ export function  initGetWeatherInfo():Promise<{ city:string }> {
         console.error('获取坐标失败',e);
         reject(new Error('获取坐标失败'));
       },{
-        enableHighAccuracy : true
+        enableHighAccuracy : true,
+        maximumAge: 60000,
+        timeout: 10000
       });
     } else {
       console.error('浏览器不支持地理定位!');
