@@ -89,6 +89,7 @@ export function  initGetWeatherInfo():Promise<{ city:string }> {
   console.log(navigator.geolocation);
   // 获取定位信息
   return new Promise((resolve, reject) => {
+
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(position => {
         const { latitude, longitude } = position.coords;
@@ -98,6 +99,7 @@ export function  initGetWeatherInfo():Promise<{ city:string }> {
       },(e)=> {
         console.error('使用geolocation获取坐标失败',e);
         const {AMap} = window;
+        console.log(window);
         AMap.plugin('AMap.CitySearch', () => {
           const citySearch = new AMap.CitySearch();
           citySearch.getLocalCity((status: any, result: any) => {

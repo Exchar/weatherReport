@@ -81,16 +81,18 @@ function getCityList(key:string,useLocal = false) {
 function getLocationInfo(useLocal = false) {
   locationLoading.value = true;
   //  获取经纬信息
-  initGetWeatherInfo().then(res=>{
-    // 精度
-    const {city} = res;
-    getCityList(city,useLocal);
-  }).catch((e)=> {
-    console.log(e);
-    message.error("无法获取到您的位置，请手动输入城市名！");
-  }).finally(()=> {
-    locationLoading.value = false;
-  });
+  setTimeout(()=> {
+    initGetWeatherInfo().then(res=>{
+      // 精度
+      const {city} = res;
+      getCityList(city,useLocal);
+    }).catch((e)=> {
+      console.log(e);
+      message.error("无法获取到您的位置，请手动输入城市名！");
+    }).finally(()=> {
+      locationLoading.value = false;
+    });
+  },500);
 
 }
 
