@@ -10,6 +10,11 @@ onMounted(()=> {
   keepAliveViews.value = filterViews.map(i=>String(i.name));
 });
 </script>
+<script lang="ts">
+export default {
+  name: "App"
+};
+</script>
 <template>
   <router-view #default="{Component}">
     <keep-alive :include="keepAliveViews">

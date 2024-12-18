@@ -38,7 +38,7 @@ window.AMapLoader.load({
 }).then((AMap:any)=>{
   console.log('加载AMap完成',AMap);
   window.AMap = AMap;
-}).catch((e)=>{
+}).catch((e:string)=>{
   console.error(e);  // 加载错误提示
 });
 //  注册naiveui控件
