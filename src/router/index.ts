@@ -22,6 +22,25 @@ export const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+    {
+    path: "/today",
+    name: "",
+    meta: {
+      keepAlive: true,
+    },
+    component: () => import("../components/Layout.vue"),
+    redirect: "/today",
+    children: [
+      {
+        path: "/today",
+        name: "Today",
+        meta: {
+          keepAlive: true,
+        },
+        component: () => import("../views/miniWeather/index.vue"),
+      },
+    ],
+  },
 ];
 
 const router = createRouter({
